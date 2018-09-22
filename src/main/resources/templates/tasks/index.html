@@ -5,6 +5,7 @@
     <title>Task list</title>
 </head>
 <body>
+<a th:href="@{tasks/new}">Create</a>
 <p th:if="${tasks.isEmpty()}">There is not task.</p>
 <ul th:unless="${tasks.isEmpty()}">
     <li th:each="task: ${tasks}">

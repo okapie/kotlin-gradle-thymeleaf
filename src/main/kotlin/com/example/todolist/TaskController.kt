@@ -20,4 +20,9 @@ class TaskController {
         // Specify html file.
         return "tasks/index"
     }
+
+    @GetMapping("new")
+    fun new(form: TaskCreateForm): String {
+        return "tasks/new"
+    }
 }
