@@ -8,14 +8,11 @@ import org.springframework.web.bind.annotation.RestController
 
 @Controller
 @RequestMapping("tasks")
-class TaskController {
+class TaskController(private val taskRepository: InMemoryTaskRepository) {
 
     @GetMapping("")
     fun index(model: Model): String {
-        val tasks = listOf(
-            Task(1, "hoge", false),
-            Task(2, "fuga", true)
-        )
+        val tasks = taskRepository.findAll()
         model.addAttribute("tasks", tasks)
         // Specify html file.
         return "tasks/index"
