@@ -10,7 +10,7 @@
         <label>
             Content: <input type="text" th:field="*{content}" />
         </label>
-        <!--<p th:if="${#field.hasErrors('content')}" th:errors="*{content}">Error message</p>-->
+        <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Error message</p>
     </div>
     <div>
         <input type="submit" value="Create" />
