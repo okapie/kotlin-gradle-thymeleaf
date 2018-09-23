@@ -4,10 +4,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
 import org.springframework.validation.annotation.Validated
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @Controller
 @RequestMapping("tasks")
@@ -33,6 +30,28 @@ class TaskController(private val taskRepository: InMemoryTaskRepository) {
             return "tasks/new"
         val content = requireNotNull(form.content)
         taskRepository.create(content)
+        return "redirect:/tasks"
+    }
+
+    @GetMapping("{id}/edit")
+    fun edit(@PathVariable("id") id: Long,
+             form: TaskUpdateForm): String {
+        val task = taskRepository.findById(id) ?: throw NotFoundException()
+        form.done = task.done
+        return "tasks/edit"
+    }
+
+    @PatchMapping("{id}")
+    fun update(@PathVariable("id") id: Long,
+               @Validated form: TaskUpdateForm,
+               bindingResult: BindingResult): String {
+        if (bindingResult.hasErrors())
+            return "tasks/edit"
+
+        val task = taskRepository.findById(id) ?: throw NotFoundException()
+        val newTask = task.copy(content = requireNotNull(form.content),
+                done = form.done)
+        taskRepository.update(newTask)
         return "redirect:/tasks"
     }
 }
