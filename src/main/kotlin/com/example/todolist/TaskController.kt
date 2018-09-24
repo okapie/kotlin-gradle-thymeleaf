@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 
 @Controller
 @RequestMapping("tasks")
-class TaskController(private val taskRepository: InMemoryTaskRepository) {
+class TaskController(private val taskRepository: JdbcTaskRepository) {
 
     @GetMapping("")
     fun index(model: Model): String {

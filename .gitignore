@@ -25,4 +25,7 @@
 /nbdist/
 /.nb-gradle/
 
+### Database ###
+db.mv.db
+
 .DS_Store
