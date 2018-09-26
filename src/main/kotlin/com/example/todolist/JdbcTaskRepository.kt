@@ -13,10 +13,9 @@ class JdbcTaskRepository(private val jdbcTemplate: JdbcTemplate) : TaskRepositor
 
     override fun create(content: String): Task {
         jdbcTemplate.update("INSERT INTO task(content) VALUES(?)", content)
-        val id = jdbcTemplate.queryForObject("SELECT last_insert_id()", Long::class.java)
-        // val id: Long = jdbcTemplate.queryForObject("SELECT last_insert_id()")
-        // FIXME: 'Type inference failed' error occurred, so I use cast by 'as' temporarily.
-        return Task(id as Long, content, false)
+//        val id = jdbcTemplate.queryForObject("SELECT last_insert_id()", Long::class.java)
+        val id: Long = jdbcTemplate.queryForObject("SELECT last_insert_id()")
+        return Task(id, content, false)
     }
 
     override fun update(task: Task) {
